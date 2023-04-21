@@ -4,6 +4,13 @@ Rails.application.routes.draw do
   devise_for :all_casa_admins, path: "all_casa_admins", controllers: {sessions: "all_casa_admins/sessions"}
   devise_for :users, controllers: {sessions: "users/sessions", passwords: "users/passwords"}
 
+  resources :preference_sets, only: [] do
+    collection do
+      post "/table_state_update/:table_name", to: "preference_sets#table_state_update", as: :table_state_update
+      get "/table_state/:table_name", to: "preference_sets#table_state", as: :table_state
+    end
+  end
+  
   concern :with_datatable do
     post "datatable", on: :collection
   end
